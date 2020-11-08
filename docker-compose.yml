@@ -1,0 +1,29 @@
+version: "3"
+networks: 
+  lifinnetwork:
+
+volumes:
+  lifindabatase:
+
+services:
+  database:
+    image: "postgres:latest"
+    restart: always
+    networks:
+      - lifinnetwork
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    environment: 
+      POSTGRES_PASSWORD: "9499"
+      POSTGRES_DB: "lifin"
+      PGPORT: "5432"
+      POSTGRES_USER: "postgres"
+  lifinapi:
+      build: .
+      container_name: lifinapi
+      ports: 
+        - "8081:80"
+      networks:
+        - lifinnetwork
+      depends_on: 
+        - database

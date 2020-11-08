@@ -1,0 +1,11 @@
+ lifinapi:
+    build: .
+    container_name: lifinapi
+    ports: 
+      - "5000:5000"
+      - "32774:32774"
+      - "5001:5001"
+    networks:
+      - lifinnetwork
+    depends_on: 
+      - lifindb
