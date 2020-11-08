@@ -14,5 +14,7 @@ namespace LifinAPI.Dtos.EventDtos
         public DateTime Date { get; set; }
         public BdeReadDto Bde { get; set; }
         public bool IsHyped { get; set; }
+        public int FollowersNumber { get; set; }
+        public int HypedNumber { get; set; }
     }
 }

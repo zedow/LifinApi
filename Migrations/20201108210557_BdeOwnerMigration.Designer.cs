@@ -3,14 +3,16 @@ using System;
 using LifinAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LifinAPI.Migrations
 {
     [DbContext(typeof(LifinContext))]
-    partial class LifinContextModelSnapshot : ModelSnapshot
+    [Migration("20201108210557_BdeOwnerMigration")]
+    partial class BdeOwnerMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

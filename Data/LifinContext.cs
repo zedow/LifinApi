@@ -38,6 +38,9 @@ namespace LifinAPI.Data
             // Events to Bde relation
             modelBuilder.Entity<Event>().HasOne(pt => pt.Bde).WithMany(p => p.Events).HasForeignKey(pt => pt.BdeId);
             modelBuilder.Entity<Bde>().HasMany(pt => pt.Events).WithOne(p => p.Bde);
+
+            // Bde to User as Owner relation
+            modelBuilder.Entity<Bde>().HasOne(bd => bd.Owner).WithMany(user => user.OwnerBdeList).HasForeignKey(bd => bd.OwnerId);
         }
     }
 }

@@ -51,6 +51,15 @@ namespace LifinAPI.Data.UserRepoFolder
             }
             context.Hypes.Add(hype);
         }
+
+        public void RemoveHypeOnEvent(Hype hype)
+        {
+            if (hype == null)
+            {
+                throw new ArgumentNullException(nameof(hype));
+            }
+            context.Hypes.Remove(hype);
+        }
         public IEnumerable<UserEvent> GetFollowedBdeEvents(string userId)
         {
             var model = (from f in context.Followers.Where(f => f.UserId == userId)
@@ -71,7 +80,9 @@ namespace LifinAPI.Data.UserRepoFolder
                              Description = e.Description,
                              BdeId = e.BdeId,
                              Bde = bde,
-                             IsHyped = h == null ? false : true
+                             IsHyped = h == null ? false : true,
+                             FollowersNumber = context.Followers.Where(f => f.BdeId == e.BdeId).Count(),
+                             HypedNumber = context.Hypes.Where(h => h.EventId == e.Id).Count()
                          }).Where(ue => ue.Date >= new DateTime()).OrderBy(ue => ue.Date).ToList();
 
             return model;

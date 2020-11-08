@@ -8,6 +8,7 @@ using AutoMapper;
 using LifinAPI.Models;
 using LifinAPI.Dtos.EventDtos;
 using LifinAPI.Dtos.BdeDtos;
+using LifinAPI.Dtos.MemberDtos;
 
 namespace LifinAPI.Controllers
 {
@@ -53,12 +54,23 @@ namespace LifinAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Bde> CreateBde(BdeCreateDto bde)
+        public ActionResult<BdeReadDto> CreateBde(BdeCreateDto bde)
         {
             var bdeModel = mapper.Map<Bde>(bde);
             repo.CreateBde(bdeModel);
             repo.SaveChanges();
+            repo.AddMember(mapper.Map<Member>(new MemberCreateDto { UserId = bde.OwnerId, BdeId = bdeModel.Id, Role = "Owner" }));
+            repo.SaveChanges();
             return (Ok(mapper.Map<BdeReadDto>(bdeModel)));
         }
+
+        //Members
+        [HttpGet("{bdeId}/members")]
+        public ActionResult<IEnumerable<MemberReadDto>> GetBdeMembers(int bdeId)
+        {
+            var members = repo.GetBdeMembers(bdeId);
+            return Ok(mapper.Map<IEnumerable<MemberReadDto>>(members));
+        }
+        
     }
 }

@@ -10,6 +10,8 @@ using LifinAPI.Models;
 using LifinAPI.Dtos.EventDtos;
 using LifinAPI.Dtos.UserDtos;
 using LifinAPI.Dtos.HypeDtos;
+using Microsoft.Extensions.Logging;
+
 namespace LifinAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -50,13 +52,22 @@ namespace LifinAPI.Controllers
             return Ok(mapper.Map<IEnumerable<UserEventReadDto>>(repo.GetFollowedBdeEvents(userId)));
         }
 
-        [HttpPost("{userId}/events")]
+        [HttpPost("events")]
         public ActionResult AddHypeToEvent(HypeCreateDto hype)
         {
             var hypeModel = mapper.Map<Hype>(hype);
             repo.AddHypeOnEvent(hypeModel);
             repo.SaveChanges();
-            return Ok();
+            return Ok(true);
+        }
+
+        [HttpDelete("{userId}/events/{eventId}")]
+        public ActionResult RemoveHypeToEvent(string userId, int eventId)
+        {
+            var hypeModel = mapper.Map<Hype>(new HypeCreateDto { UserId = userId, EventId = eventId});
+            repo.RemoveHypeOnEvent(hypeModel);
+            repo.SaveChanges();
+            return NoContent();
         }
     }
 }

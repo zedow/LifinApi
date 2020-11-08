@@ -14,6 +14,7 @@ namespace LifinAPI.Profiles
         {
             CreateMap<Member, MemberReadDto>();
             CreateMap<MemberReadDto, Member>();
+            CreateMap<MemberCreateDto, Member>();
         }
     }
 }

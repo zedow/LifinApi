@@ -21,6 +21,8 @@ namespace LifinAPI.Models
     public class UserEvent : Event
     {
         public bool IsHyped { get; set; }
+        public int FollowersNumber { get; set; }
+        public int HypedNumber { get; set; }
     }
 
 }

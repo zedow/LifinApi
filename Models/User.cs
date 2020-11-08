@@ -14,6 +14,8 @@ namespace LifinAPI.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+
+        public List<Bde> OwnerBdeList { get; set; } 
         public List<Member> BdeMemberList { get; set; }
         public List<Follower> BdeFollowList { get; set; }
         public List<Hype> Hypes { get; set; }

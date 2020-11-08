@@ -13,7 +13,8 @@ namespace LifinAPI.Data.BdeRepoFolder
         void DeleteBde(Bde bde);
         IEnumerable<Bde> GetAllBde(string filterValue);
         Bde GetBde(int id);
-
         IEnumerable<Event> GetBdeEvents(int bdeId);
+        void AddMember(Member member);
+        IEnumerable<Member> GetBdeMembers(int bdeId);
     }
 }

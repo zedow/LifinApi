@@ -61,5 +61,19 @@ namespace LifinAPI.Data.BdeRepoFolder
         {
             return context.Events.Where(e => e.BdeId == bdeId).ToList();
         }
+
+        public void AddMember(Member member)
+        {
+            if(member == null)
+            {
+                throw new ArgumentNullException(nameof(member));
+            }
+            context.Members.Add(member);
+        }
+
+        public IEnumerable<Member> GetBdeMembers(int bdeId)
+        {
+            return context.Members.Where(m => m.BdeId == bdeId).Include(m => m.User).ToList();
+        }
     }
 }
