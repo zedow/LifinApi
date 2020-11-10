@@ -16,4 +16,10 @@ namespace LifinAPI.Models
         public List<Member> Members { get; set; }
         public List<Follower> Followers { get; set; }
     }
+
+    public class UserBde
+    {
+        public Bde Bde;
+        public bool isFollowed;
+    }
 }

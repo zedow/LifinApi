@@ -9,6 +9,7 @@ using LifinAPI.Models;
 using LifinAPI.Dtos.EventDtos;
 using LifinAPI.Dtos.BdeDtos;
 using LifinAPI.Dtos.MemberDtos;
+using LifinAPI.Dtos.FollowerDtos;
 
 namespace LifinAPI.Controllers
 {
@@ -58,7 +59,6 @@ namespace LifinAPI.Controllers
         {
             var bdeModel = mapper.Map<Bde>(bde);
             repo.CreateBde(bdeModel);
-            repo.SaveChanges();
             repo.AddMember(mapper.Map<Member>(new MemberCreateDto { UserId = bde.OwnerId, BdeId = bdeModel.Id, Role = "Owner" }));
             repo.SaveChanges();
             return (Ok(mapper.Map<BdeReadDto>(bdeModel)));
@@ -71,6 +71,27 @@ namespace LifinAPI.Controllers
             var members = repo.GetBdeMembers(bdeId);
             return Ok(mapper.Map<IEnumerable<MemberReadDto>>(members));
         }
-        
+
+        [HttpPost("{bdeId}/members")]
+        public ActionResult<MemberReadDto> AddBdeMember(int bdeId,MemberCreateDto newMember)
+        {
+            var member = mapper.Map<Member>(newMember);
+            member.BdeId = bdeId;
+            repo.AddMember(member);
+            repo.SaveChanges();
+            return NoContent();
+        }
+
+       [HttpPost("{id}/follow")]
+        public ActionResult<Follower> FolloweBde(int id,FollowerCreateDto follower)
+        {
+            var newFollower = mapper.Map<Follower>(follower);
+            newFollower.BdeId = id;
+            repo.AddFollower(newFollower);
+            repo.SaveChanges();
+            return Ok(mapper.Map<FollowerReadDto>(newFollower));
+        }
+
+       
     }
 }

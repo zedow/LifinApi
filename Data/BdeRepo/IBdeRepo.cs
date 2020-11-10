@@ -16,5 +16,6 @@ namespace LifinAPI.Data.BdeRepoFolder
         IEnumerable<Event> GetBdeEvents(int bdeId);
         void AddMember(Member member);
         IEnumerable<Member> GetBdeMembers(int bdeId);
+        void AddFollower(Follower follower);
     }
 }

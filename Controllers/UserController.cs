@@ -11,6 +11,7 @@ using LifinAPI.Dtos.EventDtos;
 using LifinAPI.Dtos.UserDtos;
 using LifinAPI.Dtos.HypeDtos;
 using Microsoft.Extensions.Logging;
+using LifinAPI.Dtos.BdeDtos;
 
 namespace LifinAPI.Controllers
 {
@@ -68,6 +69,13 @@ namespace LifinAPI.Controllers
             repo.RemoveHypeOnEvent(hypeModel);
             repo.SaveChanges();
             return NoContent();
+        }
+
+        [HttpGet("{id}/bde")]
+        public ActionResult<IEnumerable<BdeListItemReadDto>> GetBdeListForUser(string id, string filter)
+        {
+            var list = repo.GetBdeListForUser(id,filter);
+            return Ok(mapper.Map<IEnumerable<BdeListItemReadDto>>(list));
         }
     }
 }

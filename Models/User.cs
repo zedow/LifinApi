@@ -12,6 +12,7 @@ namespace LifinAPI.Models
         [Key]
         [MaxLength(36)]
         public string Id { get; set; }
+        [MaxLength(255)]
         public string Name { get; set; }
         public string Email { get; set; }
 

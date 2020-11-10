@@ -16,6 +16,7 @@ namespace LifinAPI.Profiles
             CreateMap<BdeReadDto, Bde>();
             CreateMap<BdeCreateDto, Bde>();
             CreateMap<Bde, BdeCreateDto> ();
+            CreateMap<UserBde, BdeListItemReadDto>();
         }
     }
 }

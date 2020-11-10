@@ -86,28 +86,21 @@ namespace LifinAPI.Data.UserRepoFolder
                          }).Where(ue => ue.Date >= new DateTime()).OrderBy(ue => ue.Date).ToList();
 
             return model;
-            /*
+        }
 
-            return context.Followers.Where(f => f.UserId == userId)
-                .Join(
-                    context.Bdes,
-                    follower => follower.BdeId,
-                    bde => bde.Id,
-                    (follower, bde) => new Bde { Id = bde.Id, Name = bde.Name, Description = bde.Description, School = bde.School }
-                )
-                .Join(
-                    context.Events
-                    .Where(myEvent => myEvent.Date > new DateTime())
-                    .Join(context.Hypes, 
-                        myEvent => myEvent.Id, 
-                        hype => hype.EventId, 
-                        (myEvent, hype) => new { myEvent.BdeId,myEvent.Date, myEvent.Name, myEvent.Id, myEvent.Description, IsHyped = true}
-                    ),
-                    previousJoinResult => previousJoinResult.Id,
-                    myEvent => myEvent.BdeId,
-                    (previousJoinResult, myEvent) => new UserEvent { Id = myEvent.Id, Name = myEvent.Name, Date = myEvent.Date, Description = myEvent.Description, BdeId = myEvent.BdeId, Bde = previousJoinResult, IsHyped = myEvent.IsHyped  }
-                ).OrderBy(e => e.Date).ToList();
-            */
+        public IEnumerable<UserBde> GetBdeListForUser(string id, string filter)
+        {
+            var model = (
+                        from b in ((filter == null) ? context.Bdes.DefaultIfEmpty() : context.Bdes.DefaultIfEmpty().Where(b => b.Description.Contains(filter) || b.Name.Contains(filter)))
+                        join f in context.Followers.Where(f => f.UserId == id) on b.Id equals f.BdeId into followersJoin
+
+                        from bf in followersJoin.DefaultIfEmpty()
+                        select new UserBde
+                        {
+                            Bde = b,
+                            isFollowed = bf == null ? false : true
+                        });
+            return model.ToList();
         }
     }
 }

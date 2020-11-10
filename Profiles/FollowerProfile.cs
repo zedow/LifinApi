@@ -14,6 +14,7 @@ namespace LifinAPI.Profiles
         {
             CreateMap<Follower, FollowerReadDto>();
             CreateMap<FollowerReadDto, Follower>();
+            CreateMap<FollowerCreateDto, Follower>();
         }
     }
 }

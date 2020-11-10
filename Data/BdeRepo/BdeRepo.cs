@@ -48,6 +48,7 @@ namespace LifinAPI.Data.BdeRepoFolder
             {
                 bdeList = context.Bdes.Where(bde => bde.Name.Contains(filterValue) || bde.School.Contains(filterValue));
             }
+
             return bdeList.ToList();
         }
 
@@ -74,6 +75,15 @@ namespace LifinAPI.Data.BdeRepoFolder
         public IEnumerable<Member> GetBdeMembers(int bdeId)
         {
             return context.Members.Where(m => m.BdeId == bdeId).Include(m => m.User).ToList();
+        }
+
+        public void AddFollower(Follower follower)
+        {
+            if(follower == null)
+            {
+                throw new ArgumentNullException();
+            }
+            context.Followers.Add(follower);
         }
     }
 }
