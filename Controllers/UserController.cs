@@ -27,7 +27,7 @@ namespace LifinAPI.Controllers
             mapper = _mapper;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{userId}")]
         public ActionResult GetUser(string userId)
         {
             var userFromRepo = repo.GetUser(userId);

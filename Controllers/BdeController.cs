@@ -59,6 +59,7 @@ namespace LifinAPI.Controllers
         {
             var bdeModel = mapper.Map<Bde>(bde);
             repo.CreateBde(bdeModel);
+            repo.SaveChanges();
             repo.AddMember(mapper.Map<Member>(new MemberCreateDto { UserId = bde.OwnerId, BdeId = bdeModel.Id, Role = "Owner" }));
             repo.SaveChanges();
             return (Ok(mapper.Map<BdeReadDto>(bdeModel)));

@@ -16,6 +16,7 @@ using LifinAPI.Data.UserRepoFolder;
 using LifinAPI.Data.EventRepoFolder;
 using Newtonsoft.Json.Serialization;
 using AutoMapper;
+using LifinAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LifinAPI
@@ -34,7 +35,7 @@ namespace LifinAPI
         {
             services.AddDbContext<LifinContext>(opt => 
             {
-                opt.UseMySql(Configuration.GetConnectionString("LifinConnection"));
+                opt.UseMySql(Configuration.GetConnectionString("LifinDockerConnection"));
             });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers().AddNewtonsoftJson(s => {
@@ -68,6 +69,8 @@ namespace LifinAPI
             {
                 endpoints.MapControllers();
             });
+
+            PrepDb.PrepPopulation(app);
         }
     }
 }

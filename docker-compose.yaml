@@ -1,0 +1,34 @@
+version: "3"
+networks: 
+  lifin:
+
+volumes:
+  lifinv:
+
+services:
+  lifindb:
+    image: "mysql:latest"
+    container_name: lifindb
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - lifinv:/var/lib/mysql
+    networks: 
+      - lifin
+    environment:
+      MYSQL_DATABASE: lifin
+      MYSQL_USER: lifin
+      MYSQL_PASSWORD: nwslifinbde
+      MYSQL_ALLOW_EMPTY_PASSWORD: valid
+  lifinapi:
+      build:
+            dockerfile: Dockerfile
+            context: .
+      container_name: lifinapi
+      ports: 
+        - "8080:80"
+      networks:
+        - lifin
+      depends_on: 
+        - lifindb
