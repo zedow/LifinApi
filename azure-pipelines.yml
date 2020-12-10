@@ -1,4 +1,5 @@
 # Starter pipeline
+
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
@@ -11,5 +12,9 @@ pool:
 
 steps:
 - task: DockerCompose@0
-- script: docker-compose up --build
-  displayName: 'Run a Docker Compose command'
+  inputs:
+    containerregistrytype: 'Azure Container Registry'
+    azureSubscription: 'Essai gratuit(f7846ad9-d749-4e69-9472-cf75ac0f708c)'
+    azureContainerRegistry: '{"loginServer":"lifinapiacr.azurecr.io", "id" : "/subscriptions/f7846ad9-d749-4e69-9472-cf75ac0f708c/resourceGroups/LifinApi-rg/providers/Microsoft.ContainerRegistry/registries/LifinApiacr"}'
+    dockerComposeFile: '**/docker-compose.yml'
+    action: 'Run a Docker Compose command'
