@@ -17,4 +17,11 @@ steps:
     azureSubscription: 'Essai gratuit(f7846ad9-d749-4e69-9472-cf75ac0f708c)'
     azureContainerRegistry: '{"loginServer":"lifinapiacr.azurecr.io", "id" : "/subscriptions/f7846ad9-d749-4e69-9472-cf75ac0f708c/resourceGroups/LifinApi-rg/providers/Microsoft.ContainerRegistry/registries/LifinApiacr"}'
     dockerComposeFile: '**/docker-compose.yml'
-    action: 'Run a Docker Compose command'
+    action: 'Build services'
+- task: DockerCompose@0
+  inputs:
+    containerregistrytype: 'Azure Container Registry'
+    azureSubscription: 'Essai gratuit(f7846ad9-d749-4e69-9472-cf75ac0f708c)'
+    azureContainerRegistry: '{"loginServer":"lifinapiacr.azurecr.io", "id" : "/subscriptions/f7846ad9-d749-4e69-9472-cf75ac0f708c/resourceGroups/LifinApi-rg/providers/Microsoft.ContainerRegistry/registries/LifinApiacr"}'
+    dockerComposeFile: '**/docker-compose.yml'
+    action: 'Push services'
