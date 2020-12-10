@@ -14,14 +14,24 @@ steps:
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'Essai gratuit(f7846ad9-d749-4e69-9472-cf75ac0f708c)'
+    azureSubscription: 'LifinApi - Azure'
     azureContainerRegistry: '{"loginServer":"lifinapiacr.azurecr.io", "id" : "/subscriptions/f7846ad9-d749-4e69-9472-cf75ac0f708c/resourceGroups/LifinApi-rg/providers/Microsoft.ContainerRegistry/registries/LifinApiacr"}'
     dockerComposeFile: '**/docker-compose.yml'
+    dockerComposeFileArgs: |
+      MYSQL_DATABASE=lifin
+      MYSQL_USER=lifin
+      MYSQL_PASSWORD=nwslifinbde
+      MYSQL_ALLOW_EMPTY_PASSWORD=valid
     action: 'Build services'
 - task: DockerCompose@0
   inputs:
     containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'Essai gratuit(f7846ad9-d749-4e69-9472-cf75ac0f708c)'
+    azureSubscription: 'LifinApi - Azure'
     azureContainerRegistry: '{"loginServer":"lifinapiacr.azurecr.io", "id" : "/subscriptions/f7846ad9-d749-4e69-9472-cf75ac0f708c/resourceGroups/LifinApi-rg/providers/Microsoft.ContainerRegistry/registries/LifinApiacr"}'
     dockerComposeFile: '**/docker-compose.yml'
+    dockerComposeFileArgs: |
+      MYSQL_DATABASE=lifin
+      MYSQL_USER=lifin
+      MYSQL_PASSWORD=nwslifinbde
+      MYSQL_ALLOW_EMPTY_PASSWORD=valid
     action: 'Push services'
