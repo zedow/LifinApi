@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,6 +20,7 @@ using Newtonsoft.Json.Serialization;
 using AutoMapper;
 using LifinAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 namespace LifinAPI
 {
@@ -35,7 +38,7 @@ namespace LifinAPI
         {
             services.AddDbContext<LifinContext>(opt => 
             {
-                opt.UseMySql(Configuration.GetConnectionString("LifinDockerConnection"));
+                opt.UseMySql(Configuration.GetConnectionString("LifinConnection"));
             });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers().AddNewtonsoftJson(s => {
@@ -44,6 +47,11 @@ namespace LifinAPI
             services.AddScoped<IBdeRepo,BdeRepo>();
             services.AddScoped<IEventRepo,EventRepo>();
             services.AddScoped<IUserRepo,UserRepo>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api doc", Version = "v1" });
+            });
 
             // Remove for production
             services.AddCors(options => options.AddDefaultPolicy(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
@@ -60,6 +68,14 @@ namespace LifinAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "Api v1");
+                s.RoutePrefix = string.Empty;
+            });
 
             app.UseAuthorization();
 
