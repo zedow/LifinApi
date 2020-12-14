@@ -38,7 +38,7 @@ namespace LifinAPI
         {
             services.AddDbContext<LifinContext>(opt => 
             {
-                opt.UseMySql(Configuration.GetConnectionString("LifinConnection"));
+                opt.UseMySql(Configuration.GetConnectionString("LifinDockerConnection"));
             });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddControllers().AddNewtonsoftJson(s => {
