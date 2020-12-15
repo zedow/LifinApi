@@ -16,5 +16,6 @@ namespace LifinAPI.Data.UserRepoFolder
         void AddHypeOnEvent(Hype hype);
         void RemoveHypeOnEvent(Hype hype);
         IEnumerable<UserBde> GetBdeListForUser(string id, string filter);
+        IEnumerable<Bde> GetUserOwnerBdes(string userId);
     }
 }

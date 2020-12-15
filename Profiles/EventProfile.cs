@@ -15,6 +15,7 @@ namespace LifinAPI.Profiles
             CreateMap<Event, EventReadDto>();
             CreateMap<EventReadDto, Event>();
             CreateMap<UserEvent, UserEventReadDto>();
+            CreateMap<EventCreateDto, Event>();
         }
     }
 }

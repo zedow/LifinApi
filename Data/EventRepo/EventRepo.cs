@@ -13,6 +13,11 @@ namespace LifinAPI.Data.EventRepoFolder
         {
             context = _context;
         }
+
+        public bool SaveChanges()
+        {
+            return (this.context.SaveChanges() > 0);
+        }
         public void CreateEvent(Event myEvent)
         {
             if(myEvent == null)

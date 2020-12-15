@@ -54,7 +54,7 @@ namespace LifinAPI.Data.UserRepoFolder
 
         public void RemoveHypeOnEvent(Hype hype)
         {
-            if (hype == null)
+            if (hype == null || !this.context.Hypes.Where(h => h == hype).Any())
             {
                 throw new ArgumentNullException(nameof(hype));
             }
@@ -80,7 +80,7 @@ namespace LifinAPI.Data.UserRepoFolder
                              Description = e.Description,
                              BdeId = e.BdeId,
                              Bde = bde,
-                             IsHyped = h == null ? false : true,
+                             IsHyped = context.Hypes.Where(h => h.UserId == userId && h.EventId == e.Id).Any(),
                              FollowersNumber = context.Followers.Where(f => f.BdeId == e.BdeId).Count(),
                              HypedNumber = context.Hypes.Where(h => h.EventId == e.Id).Count()
                          }).Where(ue => ue.Date >= new DateTime()).OrderBy(ue => ue.Date).ToList();
@@ -101,6 +101,11 @@ namespace LifinAPI.Data.UserRepoFolder
                             isFollowed = bf == null ? false : true
                         });
             return model.ToList();
+        }
+
+        public IEnumerable<Bde> GetUserOwnerBdes(string userId)
+        {
+            return context.Bdes.Where(b => b.OwnerId == userId).ToList();
         }
     }
 }

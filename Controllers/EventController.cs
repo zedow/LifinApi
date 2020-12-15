@@ -41,5 +41,14 @@ namespace LifinAPI.Controllers
             }
             return Ok(bde);
         }
+
+        [HttpPost]
+        public ActionResult AddEvent(EventCreateDto newEvent)
+        {
+            var theEvent = mapper.Map<Event>(newEvent);
+            repo.CreateEvent(theEvent);
+            repo.SaveChanges();
+            return Ok(theEvent);
+        }
     }
 }

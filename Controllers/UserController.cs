@@ -77,5 +77,12 @@ namespace LifinAPI.Controllers
             var list = repo.GetBdeListForUser(id,filter);
             return Ok(mapper.Map<IEnumerable<BdeListItemReadDto>>(list));
         }
+
+        [HttpGet("{id}/bde/owned")]
+        public ActionResult<IEnumerable<BdeReadDto>> GetBdeOwnerList(string id)
+        {
+            var list = repo.GetUserOwnerBdes(id);
+            return Ok(mapper.Map<IEnumerable<BdeReadDto>>(list));
+        }
     }
 }

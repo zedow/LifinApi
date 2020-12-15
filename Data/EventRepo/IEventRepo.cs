@@ -8,6 +8,7 @@ namespace LifinAPI.Data.EventRepoFolder
 {
     public interface IEventRepo
     {
+        bool SaveChanges();
         void CreateEvent(Event myEvent);
         void DeleteEvent(Event myEvent);
         IEnumerable<Event> GetEvents();
